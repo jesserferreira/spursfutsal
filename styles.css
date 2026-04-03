@@ -1,0 +1,1537 @@
+/* =========================================================
+   VARIÁVEIS
+   ========================================================= */
+
+:root {
+    --color-bg: #050817;
+    --color-surface: #050b18;
+    --color-surface-alt: #070d1f;
+    --color-primary: #38bdf8;
+    --color-primary-soft: rgba(56, 189, 248, 0.24);
+    --color-success: #22c55e;
+    --color-warning: #facc15;
+    --color-danger: #ef4444;
+    --color-text: #e5f2ff;
+    --color-text-soft: #9ca3af;
+
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 22px;
+
+    --shadow-soft: 0 14px 40px rgba(15, 23, 42, 0.85);
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: radial-gradient(circle at top, #0b1120, #020617);
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* =========================================================
+   LAYOUT GENÉRICO
+   ========================================================= */
+
+.container {
+    width: min(1180px, 92%);
+    margin-inline: auto;
+}
+
+.section {
+    padding: 84px 0;
+}
+
+.section-alt {
+    background: radial-gradient(circle at top, #071225, #020617);
+}
+
+.section-header {
+    margin-bottom: 32px;
+}
+
+.section-header h2 {
+    font-size: 26px;
+    margin-bottom: 4px;
+}
+
+.section-header p {
+    font-size: 14px;
+    color: var(--color-text-soft);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(3, 7, 18, 0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.nav-container {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.brand-badge {
+    width: 50px;
+    filter: drop-shadow(white 0px 0px 3px);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.5;
+}
+
+.brand-name,
+.brand-subtitle {
+    display: block;
+}
+
+.brand-name {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.brand-subtitle {
+    font-size: 11px;
+    color: var(--color-text-soft);
+}
+
+.main-nav {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.main-nav a {
+    position: relative;
+    text-decoration: none;
+    color: var(--color-text-soft);
+    font-size: 14px;
+    padding-bottom: 4px;
+    transition: color 0.2s ease;
+}
+
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.2s ease;
+}
+
+.main-nav a:hover {
+    color: var(--color-primary);
+}
+
+.main-nav a:hover::after {
+    transform: scaleX(1);
+}
+
+.nav-cta {
+    border-radius: 999px;
+    border: 1px solid var(--color-primary);
+    padding: 6px 16px;
+}
+
+.main-nav .nav-cta {
+    border-radius: 999px;
+    border: 2px solid rgba(56, 189, 248, 0.7);
+    padding: 6px 16px;
+    background: transparent;
+    color: var(--color-text);
+    box-shadow: 0 0 0 rgba(56, 189, 248, 0);
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.main-nav .nav-cta:hover {
+    background: var(--color-primary);
+    color: #020617;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.75);
+}
+
+.main-nav .nav-cta::after {
+    content: none !important;
+}
+
+.nav-toggle {
+    display: none;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    position: relative;
+    padding: 110px 0 90px;
+    z-index: 1;
+}
+
+.hero {
+    position: relative;
+    padding: 110px 0 90px;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(5, 10, 25, 0.96), rgba(5, 10, 25, 1));
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("/image/wallpaper.jpeg") center/cover no-repeat;
+    opacity: 0.2;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.hero-kicker {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #9fc7ff;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 16px;
+}
+
+.hero-description {
+    padding: 0 20px 0 0;
+    font-size: 14px;
+    color: var(--color-text-soft);
+    margin-bottom: 8px;
+    text-align: justify;
+}
+
+.hero-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 32px 30px 30px;
+    border-radius: 22px;
+
+    background: linear-gradient(180deg,
+            rgba(32, 59, 88, 0.2) 0%,
+            rgba(8, 16, 30, 0.01) 100%);
+
+    border: 1px solid rgba(120, 180, 255, 0.22);
+
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(50, 160, 255, 0.4);
+
+    backdrop-filter: blur(18px);
+}
+
+.hero-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at top,
+            rgba(80, 160, 255, 0.25),
+            transparent 65%);
+    pointer-events: none;
+}
+
+.hero-card-header {
+    margin-bottom: 18px;
+}
+
+.hero-card-kicker {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+}
+
+.hero-card-body .teams {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.hero-card-body .team {
+    background: radial-gradient(circle at top, #020617, #020617);
+    border-radius: 14px;
+    padding: 10px 12px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.hero-card-body .team-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--color-text-soft);
+    margin-bottom: 4px;
+}
+
+.team-label {
+    text-align: center;
+}
+
+.team-name {
+    text-align: center;
+    display: block;
+}
+
+
+.hero-card-body .team-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.hero-card-body .team-name.highlight {
+    color: var(--color-primary);
+}
+
+.hero-card-body .vs {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+}
+
+.match-info {
+    font-size: 13px;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 20px;
+}
+
+.match-info p {
+    margin: 2px 0;
+}
+
+.hero-card-body .match-info p {
+    font-size: 12px;
+    color: var(--color-text-soft);
+}
+
+.hero-card .btn {
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 46px;
+    border-radius: 999px;
+
+    background: linear-gradient(180deg, #3cc8ff 0%, #13aef3 100%);
+    color: #00131f;
+
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+
+    border: none;
+
+    box-shadow:
+        0 10px 30px rgba(20, 170, 255, 0.15),
+        0 0 38px rgba(20, 170, 255, 0.1);
+
+    transition: all 0.25s ease;
+}
+
+.hero-card .btn {
+    text-align: center;
+}
+
+.hero-card .btn:hover {
+    box-shadow:
+        0 14px 40px rgba(20, 170, 255, 0.3),
+        0 0 48px rgba(20, 170, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.team {
+    padding: 13px 16px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(90deg, #22d3ee, #0ea5e9);
+    color: #020617;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 0 0 rgba(56, 189, 248, 0.0);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.btn.fullwidth {
+    width: 100%;
+}
+
+.btn:hover {
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   NOTÍCIAS
+   ========================================================= */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.news-card {
+    background: radial-gradient(circle at top left, #0f172a, #020617);
+    border-radius: var(--radius-xl);
+    padding: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: var(--shadow-soft);
+}
+
+.news-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: rgba(15, 23, 42, 0.9);
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.news-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.news-excerpt {
+    font-size: 13px;
+    color: var(--color-text-soft);
+    margin-bottom: 12px;
+}
+
+.news-footer {
+    font-size: 11px;
+    color: var(--color-text-soft);
+}
+
+/* STAGE DA GALERIA – CONTROLA O EIXO Y */
+.galeria-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(520px, 70vh, 820px);
+  display: flex;
+  align-items: center; /* CENTRALIZA VERTICAL */
+  justify-content: center;
+  overflow: visible;
+}
+
+/* CONTAINER 3D
+   perspective e transform-style são aplicados via JS (iniciarGaleria3D)
+   após o primeiro frame de layout — evita conflito com getBoundingClientRect */
+#galeria3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* SLIDES — position/left/top/width/height/transform 100% via JS */
+.galeria-slide {
+  overflow: visible;
+  cursor: pointer;
+}
+
+/* CARD — wrapper transparente, sem fundo, sem borda.
+   A borda azul e o border-radius ficam na <img> via JS (orientação inteligente). */
+.galeria-card {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+}
+
+/* Garante que regras globais de img não sobrescrevam os estilos inline do JS */
+.galeria-card img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* SLIDE ATIVO */
+.galeria-slide.active {
+  z-index: 10;
+}
+
+
+/* MOBILE — apenas a altura do stage muda; tamanhos dos slides via JS */
+@media (max-width: 768px) {
+  .galeria-stage {
+    height: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .galeria-stage {
+    height: 340px;
+  }
+}
+
+/* MODO FLAT para dispositivos com prefers-reduced-motion */
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+  .galeria-slide {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+
+/* =========================================================
+   CALENDÁRIO
+   ========================================================= */
+
+.calendar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.timeline-competition {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+}
+
+.timeline-local {
+    font-size: 12px;
+    color: var(--color-text-soft);
+}
+
+.timeline-date {
+    font-size: 12px;
+    color: var(--color-text-soft);
+    margin-bottom: 6px;
+    text-align: right;
+}
+
+/* ===== CALENDÁRIO — GRID CORRIGIDA ===== */
+
+.calendar-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 24px;
+    align-items: center;
+}
+
+.calendar-left {
+    text-align: left;
+}
+
+.calendar-middle {
+    display: flex;
+    justify-content: center;
+}
+
+.calendar-team-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 18px;
+    align-items: center;
+}
+
+.team-box {
+    text-align: center;
+}
+
+.calendar-team-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+    margin-bottom: 4px;
+}
+
+.calendar-team-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.calendar-score {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-primary);
+    min-width: 70px;
+    text-align: center;
+}
+
+.calendar-right {
+    text-align: right;
+}
+
+.timeline-date {
+    font-size: 12px;
+    color: var(--color-text-soft);
+    margin-bottom: 6px;
+}
+
+/* ===== BADGES NEON POR STATUS ===== */
+
+.timeline-status {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    border: 1px solid;
+    font-weight: 600;
+}
+
+.badge-finalizado {
+    color: #22c55e;
+    border-color: #22c55e;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+}
+
+.badge-proximo {
+    color: #38bdf8;
+    border-color: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+}
+
+.badge-cancelado {
+    color: #ef4444;
+    border-color: #ef4444;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+}
+
+.badge-adiado {
+    color: #facc15;
+    border-color: #facc15;
+    box-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+}
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 900px) {
+    .calendar-row {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 16px;
+    }
+
+    .calendar-right {
+        text-align: center;
+    }
+}
+
+/* ===== AJUSTE FINAL DE LAYOUT POR LINHA ===== */
+
+.timeline-item {
+    background: linear-gradient(180deg,
+            rgba(18, 35, 59, 0.65) 0%,
+            rgba(8, 16, 30, 0.85) 100%);
+    border: 1px solid rgba(120, 180, 255, 0.18);
+    border-radius: 18px;
+    padding: 20px 24px;
+}
+
+.timeline-content {
+    width: 100%;
+}
+
+/* mais respiro entre colunas */
+.calendar-row {
+    grid-template-columns: 1.2fr 2fr 1fr;
+}
+
+/* alinha melhor centro verticalmente */
+.calendar-middle {
+    align-items: center;
+}
+
+/* separa visualmente os jogos */
+.calendar-list {
+    gap: 22px;
+}
+
+/*.timeline-status.finalizado { color: var(--color-success); }
+.timeline-status.proximo    { color: var(--color-primary); }
+.timeline-status.adiado     { color: var(--color-warning); }
+.timeline-status.cancelado  { color: var(--color-danger); }*/
+
+@media (max-width: 768px) {
+    .calendar-row {
+        grid-template-columns: 1fr;
+        row-gap: 8px;
+    }
+
+    .timeline-date,
+    .timeline-status {
+        text-align: left;
+    }
+}
+
+/* =========================================================
+   HISTÓRICO DE JOGOS (GRID SECUNDÁRIA)
+   ========================================================= */
+
+.calendar-history-wrapper {
+    margin-top: 40px;
+}
+
+.calendar-history-filters {
+    display: flex;
+    gap: 12px;
+    margin: 26px 0 18px;
+}
+
+.calendar-history-filters select {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: #020617;
+    color: var(--color-text);
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+.calendar-history-filters select option {
+    background: #020617;
+    color: #ffffff;
+}
+
+.calendar-history-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+.history-card {
+    background: linear-gradient(180deg,
+            rgba(18, 35, 59, 0.65) 0%,
+            rgba(8, 16, 30, 0.85) 100%);
+    border: 1px solid rgba(120, 180, 255, 0.18);
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.history-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.25);
+}
+
+.history-score {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 6px;
+}
+
+.history-date {
+    font-size: 11px;
+    color: var(--color-text-soft);
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+    .calendar-history-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 520px) {
+    .calendar-history-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   LAYOUT DO CARD DE HISTÓRICO – AJUSTE DE QUEBRA
+   ========================================================= */
+
+.history-card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* linha principal: CASA | PLACAR | VISITANTE */
+.history-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* times ocupam espaço flexível e podem cortar com "..." se faltar espaço */
+.history-team {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: normal;
+    /* permite quebrar linha */
+    word-break: break-word;
+    /* quebra palavras grandes se precisar */
+}
+
+.history-team.left {
+    text-align: left;
+}
+
+.history-team.right {
+    text-align: right;
+}
+
+/* placar fica sempre centralizado e sem quebra */
+.history-score {
+    flex: 0 0 auto;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-align: center;
+    padding: 0 4px;
+}
+
+.history-date {
+    font-size: 11px;
+    color: var(--color-text-soft);
+    text-align: center;
+}
+
+/* =========================================================
+   ARTILHARIA & ASSISTÊNCIAS
+   ========================================================= */
+
+.filtro-temporada {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.filtro-temporada select {
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: #020617;
+    color: var(--color-text);
+    font-size: 14px;
+}
+
+.dupla-tabela-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.tabela-box {
+    background: radial-gradient(circle at top left, #020617, #020617);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: var(--shadow-soft);
+    padding: 16px 18px;
+}
+
+.tabela-titulo {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.standings-table th,
+.standings-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+    text-align: left;
+    font-size: 13px;
+}
+
+.standings-table th {
+    color: var(--color-text-soft);
+    font-weight: 500;
+}
+
+.atleta-col {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+}
+
+/* ícone circular do atleta com glow azul */
+.atleta-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    flex-shrink: 0;
+    border: 2px solid rgba(36, 153, 199, 0.55);
+    box-shadow: 0 0 10px rgba(36, 153, 199, 0.55), 0 0 0 2px rgba(36, 153, 199, 0.18);
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.atleta-col:hover .atleta-avatar {
+    box-shadow: 0 0 18px rgba(36, 153, 199, 0.9), 0 0 0 3px rgba(36, 153, 199, 0.35);
+    transform: translateY(-2px);
+}
+
+tbody tr {
+    height: 52px;
+}
+
+tbody td {
+    vertical-align: middle;
+}
+
+/* =========================================================
+   RESPONSIVIDADE – ARTILHARIA / ASSISTÊNCIAS / GOLEIROS
+   ========================================================= */
+
+/* =========================================================
+   RESPONSIVIDADE – ARTILHARIA / ASSISTÊNCIAS / GOLEIROS
+   ========================================================= */
+
+/* TABLET LARGO */
+@media (max-width: 980px) {
+    .dupla-tabela-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Tabela de goleiros (3ª) ocupa largura total */
+    .tabela-box:last-child {
+        grid-column: span 2;
+    }
+
+    .standings-table th,
+    .standings-table td {
+        font-size: 12px;
+        padding: 8px 6px;
+    }
+
+    .atleta-avatar {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+/* TABLET / SMARTPHONE DEITADO */
+@media (max-width: 900px) {
+    .dupla-tabela-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabela-box:last-child {
+        grid-column: auto;
+    }
+
+    /* tabela de goleiros: scroll horizontal se necessário */
+    .tabela-box {
+        overflow-x: auto;
+    }
+}
+
+/* SMARTPHONE */
+@media (max-width: 600px) {
+    .dupla-tabela-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .tabela-box {
+        width: 100%;
+        overflow-x: auto;
+        padding: 14px;
+    }
+
+    .tabela-titulo {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .standings-table {
+        min-width: 100%;
+        border-collapse: collapse;
+    }
+
+    .standings-table th,
+    .standings-table td {
+        font-size: 11px;
+        padding: 6px 5px;
+        white-space: nowrap;
+    }
+
+    .atleta-col {
+        gap: 6px;
+        white-space: nowrap;
+    }
+
+    .atleta-avatar {
+        width: 28px;
+        height: 28px;
+    }
+
+    .atleta-col span {
+        font-size: 11px;
+        line-height: 1.2;
+    }
+
+    .filtro-temporada {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .filtro-temporada select { width: 160px; }
+}
+
+/* SMARTPHONE MUITO PEQUENO */
+@media (max-width: 380px) {
+    /* Em telas < 380px esconde coluna "Jogos" para não estourar */
+    .standings-table th:last-child,
+    .standings-table td:last-child {
+        display: none;
+    }
+
+    .standings-table th,
+    .standings-table td {
+        font-size: 10px;
+        padding: 5px 4px;
+    }
+}
+
+/* MOBILE (redundância consolidada) */
+@media (max-width: 600px) {
+    .dupla-tabela-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filtro-temporada {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .tabela-titulo {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .standings-table th,
+    .standings-table td {
+        font-size: 11px;
+        padding: 7px 5px;
+    }
+
+    .atleta-col {
+        gap: 6px;
+    }
+
+    .atleta-col span {
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    .atleta-col img {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* MOBILE MUITO PEQUENO */
+@media (max-width: 380px) {
+
+    .standings-table th:nth-child(3),
+    .standings-table td:nth-child(3) {
+        display: none;
+        /* esconde coluna de jogos se faltar espaço */
+    }
+}
+
+/* MOBILE EXTREMAMENTE PEQUENO */
+@media (max-width: 380px) {
+
+    .standings-table th:nth-child(3),
+    .standings-table td:nth-child(3) {
+        display: none;
+        /* Remove coluna Jogos */
+    }
+
+    .standings-table th,
+    .standings-table td {
+        font-size: 10px;
+        padding: 6px 4px;
+    }
+}
+
+/* =========================================================
+   CARROSSEL ELENCO (DESKTOP + MOBILE)
+   ========================================================= */
+
+#elenco {
+    position: relative;
+    overflow: hidden;
+}
+
+#elenco::before {
+    content: "";
+    position: absolute;
+    inset: 20px 0;
+    background: url("/image/spurs-title.png") center center / 720px auto no-repeat;
+    opacity: 0.06;
+    pointer-events: none;
+}
+
+.elenco-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+}
+
+.elenco-viewport {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 8px 8px 12px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.elenco-viewport::-webkit-scrollbar { display: none; }
+.elenco-viewport { scrollbar-width: none; }
+
+.elenco-track {
+    display: flex;
+    gap: 18px;
+    width: max-content;
+}
+
+.jogador-card {
+    flex: 0 0 210px;
+    width: 210px;
+    background: radial-gradient(circle at top, #071225, #020617);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.jogador-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(36, 153, 199, 0.5);
+    box-shadow: 0 8px 32px rgba(36, 153, 199, 0.2);
+}
+
+.jogador-card img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+
+.jogador-info {
+    padding: 12px 14px;
+    font-size: 13px;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.65));
+    flex: 1;
+}
+
+.jogador-info strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.jogador-cargo {
+    font-size: 12px;
+    color: var(--color-text-soft);
+    display: block;
+}
+
+.jogador-idade {
+    font-size: 12px;
+    color: var(--color-primary);
+    display: block;
+    margin-top: 2px;
+}
+
+.jogador-card.ativo {
+    border-color: rgba(36, 153, 199, 0.85);
+    box-shadow: 0 0 0 2px rgba(36, 153, 199, 0.25), 0 8px 32px rgba(36, 153, 199, 0.25);
+}
+
+/* botões ‹ › */
+.elenco-btn {
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(36, 153, 199, 0.4);
+    width: 40px;
+    height: 40px;
+    background: rgba(7, 18, 37, 0.9);
+    color: #e5e7eb;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    z-index: 2;
+}
+
+.elenco-btn:hover {
+    background: rgba(36, 153, 199, 0.2);
+    border-color: #2499C7;
+    box-shadow: 0 0 12px rgba(36, 153, 199, 0.4);
+}
+
+/* TABLET (≤ 900px) */
+@media (max-width: 900px) {
+    #elenco::before {
+        inset: 40px 0;
+        background-size: 360px auto;
+    }
+
+    .elenco-carousel-wrapper { gap: 6px; }
+
+    .elenco-viewport {
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 16px 12px;
+    }
+
+    .elenco-track { gap: 14px; }
+
+    .jogador-card {
+        flex: 0 0 52vw;
+        width: 52vw;
+        max-width: 240px;
+        scroll-snap-align: center;
+    }
+
+    .jogador-card img {
+        height: 48vw;
+        max-height: 260px;
+    }
+
+    .elenco-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 18px;
+    }
+}
+
+/* MOBILE (≤ 600px) */
+@media (max-width: 600px) {
+    .elenco-viewport { padding: 6px 12px 10px; }
+
+    .elenco-track { gap: 12px; }
+
+    .jogador-card {
+        flex: 0 0 72vw;
+        width: 72vw;
+        max-width: 280px;
+    }
+
+    .jogador-card img {
+        height: 68vw;
+        max-height: 300px;
+    }
+
+    .elenco-btn { display: none; }
+}
+
+/* MOBILE MUITO PEQUENO (≤ 380px) */
+@media (max-width: 380px) {
+    .jogador-card {
+        flex: 0 0 82vw;
+        width: 82vw;
+    }
+
+    .jogador-card img { height: 76vw; }
+}
+
+/* =========================================
+   LAZY LOAD COM FADE-IN REAL
+   (excluído: .jogador-card img — controlado pelo JS via onload)
+   ========================================= */
+
+img[data-src]:not(.jogador-card img),
+img[loading="lazy"]:not(.jogador-card img) {
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+img.carregado {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Galeria 3D: fade-in controlado pelo JS no evento load. */
+.galeria-card img {
+    transition: opacity 0.4s ease;
+}
+
+/* =========================================
+   MODO LOW PERFORMANCE
+   ========================================= */
+
+body.low-performance * {
+    animation: none !important;
+    transition: none !important;
+}
+
+body.low-performance .galeria-slide,
+body.low-performance .jogador-card,
+body.low-performance .history-card,
+body.low-performance .tabela-box {
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+body.low-performance .galeria-3d {
+    perspective: none !important;
+}
+
+body.low-performance .galeria-slide {
+    transform: translateX(0) scale(1) !important;
+}
+
+/* =========================================================
+   SPONSORS / FOOTER
+   ========================================================= */
+
+.sponsors {
+    text-align: center;
+}
+
+.sponsors-row {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--color-text-soft);
+}
+
+.site-footer {
+    background: #020617;
+    padding: 36px 0 20px;
+    border-top: 1px solid rgba(15, 23, 42, 1);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.footer-text {
+    font-size: 13px;
+    color: var(--color-text-soft);
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-text-soft);
+}
+
+.footer-social a {
+    color: var(--color-text-soft)
+}
+
+@media (max-width: 900px) {
+
+    footer,
+    .footer-grid,
+    .footer-wrapper {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 1024px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dupla-tabela-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-nav {
+        position: absolute;
+        top: 70px;
+        right: 12px;
+        flex-direction: column;
+        background: #020617;
+        padding: 10px 12px;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        display: none;
+    }
+
+    .main-nav.open {
+        display: flex;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 26px;
+        height: 26px;
+        background: transparent;
+        border: none;
+    }
+
+    .nav-toggle span {
+        height: 2px;
+        width: 100%;
+        background: #e5e7eb;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .elenco-btn {
+        display: none;
+    }
+}
+
+/* =========================================================
+   FIX DEFINITIVO – ELENCO NÃO HERDAR CONTEXTO 3D
+   (apenas isola o perspective da galeria, sem tocar opacity/transform das imgs)
+   ========================================================= */
+
+#elenco,
+#elenco * {
+  transform-style: flat !important;
+  perspective: none !important;
+}
+
+/* .jogador-card img: opacity e fade-in controlados pelo JS (inicializarElencoCarrossel).
+   O estilo inline definido no JS tem precedência sobre qualquer regra CSS aqui. */
+.jogador-card img {
+  transition: opacity 0.45s ease;
+}

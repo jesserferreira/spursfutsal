@@ -1,0 +1,241 @@
+{
+  "atletas": [
+    {
+      "id": 1,
+      "nome": "Dock",
+      "idade": 26,
+      "posicao": "Presidente / Treinador",
+      "foto": "/image/atleta/dock.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 2,
+      "nome": "William",
+      "idade": 27,
+      "posicao": "Fixo / Ala",
+      "foto": "/image/atleta/will.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+      },
+    {
+      "id": 3,
+      "nome": "Wesley",
+      "idade": 25,
+      "posicao": "Ala",
+      "foto": "/image/atleta/wesley.png",
+      "temporadas": 
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 4,
+      "nome": "Ryan",
+      "idade": 23,
+      "posicao": "Pivô",
+      "foto": "/image/atleta/ryan.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },{
+      "id": 5,
+      "nome": "Wagner",
+      "idade": 26,
+      "posicao": "Fixo",
+      "foto": "/image/atleta/wagner.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 6,
+      "nome": "Luan Machado",
+      "idade": 25,
+      "posicao": "Ala",
+      "foto": "/image/atleta/luan_machado.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 7,
+      "nome": "Luan Albuquerque",
+      "idade": 22,
+      "posicao": "Ala",
+      "foto": "/image/atleta/luan_albuquerque.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 8,
+      "nome": "Brandão",
+      "idade": 34,
+      "posicao": "Fixo",
+      "foto": "/image/atleta/brandao.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 9,
+      "nome": "Dani",
+      "idade": 28,
+      "posicao": "Ala",
+      "foto": "/image/atleta/dani.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 10,
+      "nome": "Pelézinho",
+      "idade": 25,
+      "posicao": "Ala",
+      "foto": "/image/atleta/pelezinho.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 11,
+      "nome": "Gabriel Martins",
+      "idade": 28,
+      "posicao": "Goleiro",
+      "foto": "/image/atleta/gabriel.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "golsSofridos": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "golsSofridos": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "golsSofridos": 0, "assistencias": 0, "jogos": 0}
+      }
+    },
+    {
+      "id": 12,
+      "nome": "Pantera",
+      "idade": 34,
+      "posicao": "Goleiro",
+      "foto": "/image/atleta/pantera.png",
+      "temporadas":
+      {
+        "2024": {"gols": 0, "golsSofridos": 0, "assistencias": 0, "jogos": 0},
+        "2025": {"gols": 0, "golsSofridos": 0, "assistencias": 0, "jogos": 0},
+        "2026": {"gols": 0, "golsSofridos": 0, "assistencias": 0, "jogos": 0}
+      }
+    }
+  ],
+  "jogos": [
+    {
+      "data": "2025-11-10",
+      "competicao": "Amistoso",
+      "local": "Kursahiki",
+      "mandante": "Sporting Sapucaia",
+      "visitante": "Spurs Futsal",
+      "placarMandante": 4,
+      "placarVisitante": 3,
+      "status": "finalizado"
+    },
+    {
+      "data": "2025-11-18",
+      "competicao": "Amistoso",
+      "local": "Arena Futsal",
+      "mandante": "Penarol",
+      "visitante": "Spurs Futsal",
+      "placarMandante": 7,
+      "placarVisitante": 6,
+      "status": "finalizado"
+    },
+    {
+      "data": "2025-11-05",
+      "competicao": "Amistoso",      
+      "local": "Ginásio Camilo",
+      "mandante": "River Sapucaia",
+      "visitante": "Spurs Futsal",
+      "placarMandante": 7,
+      "placarVisitante": 8,
+      "status": "finalizado"
+    },
+    {
+      "data": "2025-12-08",
+      "competicao": "Confraternização",      
+      "local": "Quadra Condomínio",
+      "mandante": "Spurs OLD",
+      "visitante": "Spurs NEW",
+      "placarMandante": 0,
+      "placarVisitante": 0,
+      "status": "cancelado"
+    },
+    {
+      "data": "2026-01-01",
+      "competicao": "Confraternização",      
+      "local": "Quadra Condomínio",
+      "mandante": "Spurs OLD",
+      "visitante": "Spurs NEW",
+      "placarMandante": 0,
+      "placarVisitante": 0,
+      "status": "proximo"
+    }
+  ],
+"galeria": [
+  {
+    "imagem": "/image/galeria/dock.jpg",
+    "alt": "Dock"
+  },
+  {
+    "imagem": "/image/galeria/mascote.jpg",
+    "alt": "Mascote Spurs"
+  },
+  {
+    "imagem": "/image/galeria/torneio11-03.jpg",
+    "alt": "Vice Campeão torneio 11/03/2025"
+  },
+  {
+    "imagem": "/image/galeria/torneio19-11.jpg",
+    "alt": "Vice Campeão torneio 19/11/2025"
+  },
+  {
+    "imagem": "/image/galeria/grupo.jpg",
+    "alt": "Campeão torneio 11/03/2025"
+  },
+  {
+    "imagem": "/image/galeria/pelezinho.jpg",
+    "alt": "Lucas Pelezinho"
+  },
+  {
+    "imagem": "/image/galeria/torneio28-11.jpg",
+    "alt": "Vice Campeão torneio 19/11/2025"
+  }
+]
+}
