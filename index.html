@@ -2,116 +2,283 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="image/spurs-ico.ico" type="image/x-icon">
-    <title>SPURS | Em Construção</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            color: white;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            letter-spacing: 0.2rem;
-            text-align: center;
-            background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(16, 0, 255, 1) 100%);
-            padding: 20px;
-        }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Spurs Futsal – Clube amador de futsal de Sapucaia do Sul. Jogos, elenco, estatísticas e galeria.">
+    <meta name="robots" content="index, follow">
 
-        h1 {
-            font-size: 2.5rem;
-            text-shadow: 3px 3px 4px black;
-        }
+    <meta property="og:title" content="Spurs Futsal">
+    <meta property="og:description" content="Acompanhe o Spurs Futsal – jogos, atletas e desempenho.">
+    <meta property="og:image" content="https://seudominio.com/image/share.jpg">
+    <meta property="og:type" content="website">
 
-        .logo {
-            max-width: 100%;
-            height: auto;
-            width: 300px;
-            filter: drop-shadow(0 0 0.2rem rgb(255, 255, 255));
-        }
+    <title>Spurs Futsal Sapucaia</title>
 
-        .breve {
-            box-shadow: 0px 10px 14px -7px #000000;
-            background: linear-gradient(to bottom, #0400ff 5%, #1146f3 100%);
-            border-radius: 30px;
-            display: inline-block;
-            color: #ffffff;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 13px 32px;
-            text-shadow: 0px 1px 0px #000000;
-            margin: 30px 10px;
-        }
-
-        .grupo_div {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-top: 50px;
-        }
-
-        .grupo {
-            width: 90%;
-            max-width: 800px;
-            border-radius: 25%;
-            box-shadow: 0px 20px 10px #000000;
-        }
-
-        footer {
-            font-size: 12px;
-            padding-top: 30px;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .breve {
-                font-size: 1rem;
-                padding: 10px 25px;
-            }
-
-            .grupo {
-                border-radius: 15%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .breve {
-                font-size: 0.9rem;
-                padding: 8px 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="shortcut icon" href="/image/spurs-ico.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body>
+    <!-- Header / Navbar -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="#topo" class="brand">
+                <img class="brand-badge" src="/image/spurs-title.png" alt="Spurs Futsal" />
+                <div class="brand-text">
+                    <span class="brand-name">Spurs Futsal</span>
+                    <span class="brand-subtitle">Clube amador de futsal de Sapucaia do Sul - RS</span>
+                </div>
+            </a>
 
-    <h1>SITE EM CONSTRUÇÃO</h1>
+            <nav class="main-nav" id="mainNav">
+                <a href="#noticias" class="nav-link">Notícias</a>
+                <a href="#calendario" class="nav-link">Calendário</a>
+                <a href="#galeria" class="nav-link">Galeria</a>
+                <a href="#artilharia" class="nav-link">Artilharia</a>
+                <a href="#elenco" class="nav-link">Elenco</a>
+                <a href="#contato" class="nav-link nav-cta">Contato</a>
+            </nav>
 
-    <div>
-        <img src="image/spurs-title.png" alt="Escudo Spurs" class="logo">
-    </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false"
+                aria-controls="mainNav">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
 
-    <p class="breve">Em breve, novidades!</p>
+    <main id="topo">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="hero-kicker">Clube · Futebol · Resenha</p>
+                    <h1>Spurs, mais que futebol</h1>
 
-    <div class="grupo_div">
-        <img src="image/grupo.jpg" alt="Grupo SPURS" class="grupo">
-    </div>
+                    <p class="hero-description">
+                        A equipe foi fundada em 27 de janeiro de 2021 por um grupo de amigos apaixonados por futebol.
+                        Este grupo de amigos que sempre estavam jogando nos ginásios da cidade materna, decidiram fundar
+                        a equipe para fazer frente contra grandes times da região.
+                    </p>
 
-    <footer>
-        <p>&copy; 2025 SPURS Sapucaia | Todos os direitos reservados</p>
+                    <p class="hero-description">
+                        Acompanhe as últimas notícias, próximos jogos e tudo o que envolve o dia a dia da nossa equipe.
+                    </p>
+                </div>
+
+                <aside class="hero-card" id="proximoJogo">
+                    <div class="hero-card-header">
+                        <span class="hero-card-kicker">Próximo jogo</span>
+                    </div>
+                    <div class="hero-card-body" id="heroNextMatch">
+                        <!-- Preenchido via JS com base no próximo jogo do JSON -->
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Notícias -->
+        <section id="noticias" class="section">
+            <div class="container section-header">
+                <div>
+                    <h2>Últimas notícias</h2>
+                    <p>Atualizações recentes sobre amistos, competições e resenha do clube.</p>
+                </div>
+            </div>
+
+            <div class="container cards-grid" id="newsGrid">
+                <!-- Cards de notícias via JS -->
+            </div>
+        </section>
+
+        <!-- Galeria 3D -->
+        <section id="galeria" class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2>Galeria</h2>
+                        <p>Momentos marcantes do Spurs em quadra.</p>
+                    </div>
+                </div>
+
+                <!-- ISOLADOR 3D (CRÍTICO) -->
+                <div class="galeria-stage">
+                    <!-- CONTAINER ÚNICO USADO PELO JS -->
+                    <div id="galeria3d"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Calendário -->
+        <section id="calendario" class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2>Calendário recente</h2>
+                        <p>Veja como foram os últimos jogos da temporada.</p>
+                    </div>
+                </div>
+
+                <div class="calendar-list" id="calendarList">
+                    <!-- Calendário preenchido via JS -->
+                </div>
+
+                <!-- HISTÓRICO DE JOGOS -->
+                <div class="calendar-history-wrapper">
+
+                    <div class="calendar-history-filters">
+                        <select id="filtroTemporada"></select>
+                        <select id="filtroMes"></select>
+                    </div>
+
+                    <div class="calendar-history-grid" id="calendarHistoryGrid">
+                        <!-- Histórico preenchido via JS -->
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Artilharia & Assistências -->
+        <section id="artilharia" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2>Artilharia · Assistências · Goleiro menos vazado</h2>
+                        <p>Desempenho individual dos atletas na temporada</p>
+                    </div>
+                </div>
+
+                <div class="filtro-temporada">
+                    <label for="temporadaSelect">Temporada:</label>
+                    <select id="temporadaSelect">
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+
+                <div class="dupla-tabela-grid">
+                    <div class="tabela-box">
+                        <h3 class="tabela-titulo">Artilharia</h3>
+                        <table class="standings-table tabela-artilharia">
+                            <thead>
+                                <tr>
+                                    <th>Atleta</th>
+                                    <th>Gols</th>
+                                    <th>Jogos</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyGols"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="tabela-box">
+                        <h3 class="tabela-titulo">Assistências</h3>
+                        <table class="standings-table tabela-artilharia">
+                            <thead>
+                                <tr>
+                                    <th>Atleta</th>
+                                    <th>Assistências</th>
+                                    <th>Jogos</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyAssistencias"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="tabela-box">
+                        <h3 class="tabela-titulo">Goleiro menos vazado</h3>
+                        <table class="standings-table tabela-artilharia">
+                            <thead>
+                                <tr>
+                                    <th>Goleiro</th>
+                                    <th>Gols sofridos</th>
+                                    <th>Assistências</th>
+                                    <th>Jogos</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyGoleiros"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Carrossel de Elenco -->
+        <section id="elenco" class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2>Elenco Spurs Futsal</h2>
+                        <p>Conheça os atletas da temporada.</p>
+                    </div>
+                </div>
+
+                <div class="elenco-carousel-wrapper">
+                    <button class="elenco-btn prev" id="elencoPrev" aria-label="Anterior">‹</button>
+
+                    <div class="elenco-viewport">
+                        <div class="elenco-track" id="elencoTrack">
+                            <!-- Cards de atletas via JS -->
+                        </div>
+                    </div>
+
+                    <button class="elenco-btn next" id="elencoNext" aria-label="Próximo">›</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Patrocinadores / Footer mínimo -->
+        <section class="section section-alt" id="patrocinadores">
+            <div class="container sponsors">
+                <h3>Patrocinadores oficiais</h3>
+                <div class="sponsors-row">
+                    <div>Seja nosso patrocinador fixo</div>
+                    <!--<div class="sponsor-pill">Patrocinador A</div>
+                    <div class="sponsor-pill">Patrocinador B</div>
+                    <div class="sponsor-pill">Patrocinador C</div>
+                    <div class="sponsor-pill">Patrocinador D</div>-->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contato" class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h4>Rede Social</h4>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/spurssapucaiafutsal/" target="_blank">Instagram</a>
+                </div>
+            </div>
+            <div>
+                <h4>Contato</h4>
+                <p class="footer-text">
+                    E-mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="31424144434257444542505d1f4250414452505850555e42445d71565c50585d1f525e5c">[email&#160;protected]</a><br />
+                    Endereço: Sapucaia do Sul, Rio Grande do Sul, Brasil
+                </p>
+            </div>
+            <div>
+                <h4>Spurs Futsal</h4>
+                <p class="footer-text">
+                    Landing page desenvolvida por JesserFerreira. <br />
+                    Todos direitos autorais da equipe Spurs Futsal.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2025 – Spurs Futsal Sapucaia</span>
+        </div>
     </footer>
+
+    <script src="/JS.js" defer></script>
 </body>
 
 </html>
