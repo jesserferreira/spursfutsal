@@ -489,6 +489,7 @@ function inicializarArtilhariaEAassistencias(atletas) {
 function inicializarElencoCarrossel(atletas) {
   const track    = document.getElementById("elencoTrack");
   const viewport = document.querySelector(".elenco-viewport");
+  const section  = document.getElementById("elenco");
   const btnPrev  = document.getElementById("elencoPrev");
   const btnNext  = document.getElementById("elencoNext");
 
@@ -528,46 +529,40 @@ function inicializarElencoCarrossel(atletas) {
   const total  = cards.length;
   let index    = 0;
   let autoplayTimer  = null;
+  let visivel        = false;
   let pausadoPorUser = false;
 
   // ----------------------------
-  // SCROLL CENTRALIZADO PARA INDEX
+  // SCROLL CENTRALIZADO PARA INDEX (wrap infinito)
   // ----------------------------
   function scrollParaIndex(i, smooth = true) {
-    // wrap infinito
     index = ((i % total) + total) % total;
-
     const card = cards[index];
     if (!card) return;
-
     const alvo = card.offsetLeft - viewport.offsetWidth / 2 + card.offsetWidth / 2;
-
     viewport.scrollTo({ left: Math.max(0, alvo), top: 0, behavior: smooth ? "smooth" : "auto" });
-
     cards.forEach((c) => c.classList.remove("ativo"));
     card.classList.add("ativo");
   }
 
   // ----------------------------
-  // DETECTA CARD MAIS PRÓXIMO DO CENTRO (scroll manual / touch)
+  // SNAP AO MAIS PRÓXIMO (scroll manual)
   // ----------------------------
   function snapAoMaisProximo() {
     const centro = viewport.scrollLeft + viewport.offsetWidth / 2;
     let melhorIdx = 0, melhorDist = Infinity;
-
     cards.forEach((c, i) => {
       const dist = Math.abs(c.offsetLeft + c.offsetWidth / 2 - centro);
       if (dist < melhorDist) { melhorDist = dist; melhorIdx = i; }
     });
-
     if (melhorIdx !== index) scrollParaIndex(melhorIdx, true);
   }
 
   // ----------------------------
-  // AUTOPLAY INFINITO (wrap no último card → volta ao primeiro)
+  // AUTOPLAY INFINITO
   // ----------------------------
   function iniciarAutoplay() {
-    pararAutoplay();
+    if (autoplayTimer || pausadoPorUser) return;
     autoplayTimer = setInterval(() => {
       scrollParaIndex(index + 1, true);
     }, 3200);
@@ -579,6 +574,25 @@ function inicializarElencoCarrossel(atletas) {
   }
 
   // ----------------------------
+  // AUTOPLAY DISPARA AO ENTRAR NA SEÇÃO
+  // ----------------------------
+  if ("IntersectionObserver" in window && section) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visivel = entry.isIntersecting;
+          if (visivel && !pausadoPorUser) iniciarAutoplay();
+          else if (!visivel) pararAutoplay();
+        });
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(section);
+  } else {
+    iniciarAutoplay();
+  }
+
+  // ----------------------------
   // BOTÕES ‹ ›
   // ----------------------------
   btnNext?.addEventListener("click", (e) => {
@@ -586,7 +600,7 @@ function inicializarElencoCarrossel(atletas) {
     pausadoPorUser = true;
     pararAutoplay();
     scrollParaIndex(index + 1, true);
-    setTimeout(() => { pausadoPorUser = false; iniciarAutoplay(); }, 5000);
+    setTimeout(() => { pausadoPorUser = false; if (visivel) iniciarAutoplay(); }, 5000);
   });
 
   btnPrev?.addEventListener("click", (e) => {
@@ -594,7 +608,7 @@ function inicializarElencoCarrossel(atletas) {
     pausadoPorUser = true;
     pararAutoplay();
     scrollParaIndex(index - 1, true);
-    setTimeout(() => { pausadoPorUser = false; iniciarAutoplay(); }, 5000);
+    setTimeout(() => { pausadoPorUser = false; if (visivel) iniciarAutoplay(); }, 5000);
   });
 
   // ----------------------------
@@ -605,7 +619,7 @@ function inicializarElencoCarrossel(atletas) {
       pausadoPorUser = true;
       pararAutoplay();
       scrollParaIndex(i, true);
-      setTimeout(() => { pausadoPorUser = false; iniciarAutoplay(); }, 5000);
+      setTimeout(() => { pausadoPorUser = false; if (visivel) iniciarAutoplay(); }, 5000);
     });
   });
 
@@ -616,36 +630,64 @@ function inicializarElencoCarrossel(atletas) {
   viewport.addEventListener("scroll", () => {
     if (pausadoPorUser) return;
     clearTimeout(scrollEndTimer);
-    scrollEndTimer = setTimeout(snapAoMaisProximo, 120);
+    scrollEndTimer = setTimeout(snapAoMaisProximo, 150);
   });
 
-  // ----------------------------
-  // HOVER pausa / retoma
-  // ----------------------------
-  viewport.addEventListener("mouseenter", pararAutoplay);
-  viewport.addEventListener("mouseleave", () => { if (!pausadoPorUser) iniciarAutoplay(); });
+  // Hover desktop pausa
+  viewport.addEventListener("mouseenter", () => { pararAutoplay(); });
+  viewport.addEventListener("mouseleave", () => { if (!pausadoPorUser && visivel) iniciarAutoplay(); });
 
   // ----------------------------
-  // SWIPE TOUCH
+  // SWIPE TOUCH — horizontal sem conflitar com scroll da página
   // ----------------------------
   let touchStartX = 0;
+  let touchStartY = 0;
+  let swipeAtivo  = false;
+
   viewport.addEventListener("touchstart", (e) => {
     touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    swipeAtivo  = false;
+    pausadoPorUser = true;
     pararAutoplay();
   }, { passive: true });
 
+  viewport.addEventListener("touchmove", (e) => {
+    const dx = Math.abs(e.touches[0].clientX - touchStartX);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+    if (dx > dy && dx > 8) {
+      swipeAtivo = true;
+      // Não previne default aqui — o viewport tem overflow-x: auto, então o scroll nativo funciona
+    }
+  }, { passive: true });
+
   viewport.addEventListener("touchend", (e) => {
-    const delta = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(delta) > 40) scrollParaIndex(delta < 0 ? index + 1 : index - 1, true);
-    setTimeout(iniciarAutoplay, 4000);
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+
+    if (swipeAtivo && Math.abs(deltaX) > 40 && deltaY < 80) {
+      scrollParaIndex(deltaX < 0 ? index + 1 : index - 1, true);
+    } else {
+      snapAoMaisProximo();
+    }
+
+    setTimeout(() => {
+      pausadoPorUser = false;
+      if (visivel) iniciarAutoplay();
+    }, 4000);
   }, { passive: true });
 
   // ----------------------------
-  // INICIALIZA
+  // INIT
   // ----------------------------
   requestAnimationFrame(() => {
     scrollParaIndex(0, false);
-    iniciarAutoplay();
+    // Autoplay imediato se a seção já estiver visível ao carregar
+    const rect = section?.getBoundingClientRect();
+    if (rect && rect.top < window.innerHeight * 0.75) {
+      visivel = true;
+      iniciarAutoplay();
+    }
   });
 }
 
@@ -712,107 +754,101 @@ function ativarLowPerformanceAuto() {
 document.addEventListener("DOMContentLoaded", ativarLowPerformanceAuto);
 
 // =======================
-// GALERIA 3D – ALTERNATIVA B (posicionamento refatorado)
+// GALERIA 3D – RESPONSIVA + AUTOPLAY POR SEÇÃO
 // =======================
 
 function iniciarGaleria3D(galeria) {
   const container = document.getElementById("galeria3d");
+  const stage     = document.querySelector(".galeria-stage");
   if (!container || !galeria?.length) return;
 
   container.innerHTML = "";
-
-  // ----------------------------
-  // B.1 — PERSPECTIVE via JS, após DOM montado,
-  //        removendo a dependência do CSS (perspective + transform-style no #galeria3d).
-  //        Isso garante que o contexto 3D só existe depois que o layout foi calculado.
-  // ----------------------------
-  container.style.position = "relative";
-  container.style.width = "100%";
-  container.style.height = "100%";
-  container.style.perspective = "1200px";
+  container.style.position        = "relative";
+  container.style.width           = "100%";
+  container.style.height          = "100%";
+  container.style.perspective     = "1200px";
   container.style.perspectiveOrigin = "50% 50%";
-  // Slides NÃO precisam de preserve-3d no container; cada slide aplica seu próprio transform 3D.
 
   let indexAtivo = 0;
-  let autoplay = null;
-  const total = galeria.length;
-
-  const SLOT_WIDTH = 380;
-  const SLOT_HEIGHT = 480;
-  const ESPACO_ENTRE = 240;   // distância X entre slides adjacentes
-  const ROTATE_Y_POR_SLOT = 28; // graus de rotação por posição
-  const TRANSLATEZ_ATIVO = 80;  // slide central avança em Z
+  let autoplay   = null;
+  let visivel    = false;          // controlado pelo IntersectionObserver
+  const total    = galeria.length;
 
   // ----------------------------
-  // B.2 — CRIA SLIDES sem inline top/left/marginTop —
-  //        o posicionamento absoluto centralizado é feito
-  //        100% via transform no atualizar(), evitando
-  //        conflito entre layout CSS e contexto 3D.
+  // DIMENSÕES RESPONSIVAS — recalculadas a cada atualizar()
   // ----------------------------
-  galeria.forEach((item, idx) => {
+  function getDims() {
+    const w = container.offsetWidth;
+
+    // Mobile ≤ 480px: slide central = 80vw, sem 3D lateral visível
+    if (w <= 480) {
+      return {
+        slotW:     Math.round(w * 0.78),
+        slotH:     Math.round(w * 0.78 * 1.25),   // ratio ~4:5
+        espacoX:   Math.round(w * 0.82),           // laterais quase fora da tela
+        rotateY:   18,
+        translateZ: 40,
+        mostrarAte: 1,                              // mostra só offset ±1
+      };
+    }
+    // Tablet 481–768px
+    if (w <= 768) {
+      return {
+        slotW:     Math.round(w * 0.55),
+        slotH:     Math.round(w * 0.55 * 1.3),
+        espacoX:   Math.round(w * 0.52),
+        rotateY:   22,
+        translateZ: 60,
+        mostrarAte: 1,
+      };
+    }
+    // Desktop > 768px
+    return {
+      slotW:     380,
+      slotH:     480,
+      espacoX:   240,
+      rotateY:   28,
+      translateZ: 80,
+      mostrarAte: 2,
+    };
+  }
+
+  // ----------------------------
+  // CRIA SLIDES
+  // ----------------------------
+  galeria.forEach((item) => {
     const slide = document.createElement("div");
     slide.className = "galeria-slide";
-
-    slide.style.position = "absolute";
-    slide.style.top = "50%";
-    slide.style.left = "50%";
-    slide.style.width = `${SLOT_WIDTH}px`;
-    slide.style.height = `${SLOT_HEIGHT}px`;
+    slide.style.position        = "absolute";
+    slide.style.top             = "50%";
+    slide.style.left            = "50%";
     slide.style.transformOrigin = "center center";
-    slide.style.willChange = "transform, opacity";
-    slide.style.transition = "transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.55s ease";
-    slide.style.cursor = "pointer";
+    slide.style.willChange      = "transform, opacity";
+    slide.style.transition      = "transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.55s ease";
+    slide.style.cursor          = "pointer";
 
-    // Wrapper transparente — sem fundo, sem borda no slot.
-    // A borda azul será aplicada na <img> com tamanho real após onload.
     slide.innerHTML = `
       <div class="galeria-card" style="
         width:100%; height:100%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        background:transparent;
-        border:none;
-        overflow:visible;
+        display:flex; align-items:center; justify-content:center;
+        background:transparent; border:none; overflow:visible;
       ">
-        <img
-          alt="${item.alt || ""}"
-          style="
-            display:block;
-            max-width:100%;
-            max-height:100%;
-            width:auto;
-            height:auto;
-            object-fit:contain;
-            border-radius:14px;
-            border:2px solid #2499C7;
-            box-shadow:0 0 0 0 transparent;
-            opacity:0;
-            transition:opacity 0.4s ease;
-          "
-        >
+        <img alt="${item.alt || ""}" style="
+          display:block; max-width:100%; max-height:100%;
+          width:auto; height:auto; object-fit:contain;
+          border-radius:14px; border:2px solid #2499C7;
+          opacity:0; transition:opacity 0.4s ease;
+        ">
       </div>
     `;
 
     const img = slide.querySelector("img");
-
     img.addEventListener("load", () => {
       const ratio = img.naturalWidth / img.naturalHeight;
-
-      // Detecta orientação e dimensiona a imagem dentro do slot preservando proporção
-      if (ratio >= 1) {
-        // PAISAGEM: limita pela largura
-        img.style.width  = "100%";
-        img.style.height = "auto";
-      } else {
-        // RETRATO: limita pela altura
-        img.style.width  = "auto";
-        img.style.height = "100%";
-      }
-
+      img.style.width  = ratio >= 1 ? "100%" : "auto";
+      img.style.height = ratio >= 1 ? "auto"  : "100%";
       img.style.opacity = "1";
     });
-
     img.src = item.imagem;
 
     container.appendChild(slide);
@@ -821,61 +857,44 @@ function iniciarGaleria3D(galeria) {
   const slides = [...container.children];
 
   // ----------------------------
-  // B.3 — CENTRALIZAÇÃO via offsetWidth do CONTAINER
-  //        (não via getBoundingClientRect do stage, que pode
-  //         retornar 0 antes do primeiro paint ou ter offsets de scroll)
-  // ----------------------------
-  function getCenterX() {
-    return container.offsetWidth / 2;
-  }
-
-  function getCenterY() {
-    return container.offsetHeight / 2;
-  }
-
-  // ----------------------------
-  // B.4 — ATUALIZAR: aplica transform 3D baseado no offset circular
+  // ATUALIZAR — recalcula dims a cada chamada (responsivo ao resize)
   // ----------------------------
   function atualizar() {
-    const cx = getCenterX();
-    const cy = getCenterY();
+    const { slotW, slotH, espacoX, rotateY, translateZ, mostrarAte } = getDims();
 
     slides.forEach((slide, i) => {
       let offset = i - indexAtivo;
-
-      // Wrap circular: mantém o offset no intervalo [-total/2, total/2]
-      if (offset > total / 2)  offset -= total;
+      if (offset >  total / 2) offset -= total;
       if (offset < -total / 2) offset += total;
 
       const abs = Math.abs(offset);
 
-      // Oculta slides muito distantes (evita poluição visual)
-      if (abs > 2) {
-        slide.style.opacity = "0";
+      // Aplica tamanho do slot responsivo
+      slide.style.width  = `${slotW}px`;
+      slide.style.height = `${slotH}px`;
+
+      if (abs > mostrarAte) {
+        slide.style.opacity       = "0";
         slide.style.pointerEvents = "none";
-        slide.style.zIndex = "0";
+        slide.style.zIndex        = "0";
         return;
       }
 
-      // Parâmetros 3D por posição
-      const translateX = offset * ESPACO_ENTRE;
-      const translateZ = abs === 0 ? TRANSLATEZ_ATIVO : -60 * abs;
-      const rotateY    = offset * -ROTATE_Y_POR_SLOT;
-      const escala     = abs === 0 ? 1.0 : 0.82 - abs * 0.04;
-      const opacidade  = abs === 0 ? 1   : 0.55 - abs * 0.1;
+      const tX   = offset * espacoX;
+      const tZ   = abs === 0 ? translateZ : -55 * abs;
+      const rY   = offset * -rotateY;
+      const esc  = abs === 0 ? 1.0 : 0.80 - abs * 0.04;
+      const opa  = abs === 0 ? 1.0 : 0.50 - abs * 0.08;
 
-      slide.style.opacity      = String(Math.max(0, opacidade));
-      slide.style.zIndex       = String(10 - abs);
+      slide.style.opacity       = String(Math.max(0, opa));
+      slide.style.zIndex        = String(10 - abs);
       slide.style.pointerEvents = "auto";
-
-      // B.3: left/top fixos em 50% (CSS), translateX/Z/rotateY aplicados via transform
-      // O translate(-50%,-50%) centraliza o slot; os demais valores fazem o efeito 3D.
-      slide.style.transform = `
+      slide.style.transform     = `
         translate(-50%, -50%)
-        translateX(${translateX}px)
-        translateZ(${translateZ}px)
-        rotateY(${rotateY}deg)
-        scale(${escala})
+        translateX(${tX}px)
+        translateZ(${tZ}px)
+        rotateY(${rY}deg)
+        scale(${esc})
       `;
 
       slide.classList.toggle("active", abs === 0);
@@ -883,30 +902,14 @@ function iniciarGaleria3D(galeria) {
   }
 
   // ----------------------------
-  // CLIQUE NO SLIDE (navega para ele)
-  // ----------------------------
-  slides.forEach((slide, i) => {
-    slide.addEventListener("click", () => {
-      let offset = i - indexAtivo;
-      if (offset > total / 2)  offset -= total;
-      if (offset < -total / 2) offset += total;
-
-      if (offset === 0) return; // já ativo
-      indexAtivo = i;
-      pararAutoplay();
-      atualizar();
-      setTimeout(iniciarAutoplay, 4000);
-    });
-  });
-
-  // ----------------------------
   // AUTOPLAY
   // ----------------------------
   function iniciarAutoplay() {
+    if (autoplay) return;
     autoplay = setInterval(() => {
       indexAtivo = (indexAtivo + 1) % total;
       atualizar();
-    }, 4000);
+    }, 3500);
   }
 
   function pararAutoplay() {
@@ -915,38 +918,103 @@ function iniciarGaleria3D(galeria) {
   }
 
   // ----------------------------
-  // HOVER pausa autoplay
+  // AUTOPLAY DISPARA QUANDO A SEÇÃO FICA VISÍVEL
+  // (IntersectionObserver — ativa ao entrar, pausa ao sair)
   // ----------------------------
+  if ("IntersectionObserver" in window && stage) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visivel = entry.isIntersecting;
+          visivel ? iniciarAutoplay() : pararAutoplay();
+        });
+      },
+      { threshold: 0.3 }   // 30% da seção visível já ativa
+    );
+    io.observe(stage);
+  } else {
+    // Fallback para browsers antigos
+    iniciarAutoplay();
+  }
+
+  // Pausa ao interagir com mouse (desktop)
   container.addEventListener("mouseenter", pararAutoplay);
-  container.addEventListener("mouseleave", iniciarAutoplay);
+  container.addEventListener("mouseleave", () => { if (visivel) iniciarAutoplay(); });
 
   // ----------------------------
-  // SWIPE (touch)
+  // CLIQUE NO SLIDE
   // ----------------------------
-  let startX = 0;
+  slides.forEach((slide, i) => {
+    slide.addEventListener("click", () => {
+      let offset = i - indexAtivo;
+      if (offset >  total / 2) offset -= total;
+      if (offset < -total / 2) offset += total;
+      if (offset === 0) return;
+      indexAtivo = i;
+      pararAutoplay();
+      atualizar();
+      setTimeout(() => { if (visivel) iniciarAutoplay(); }, 4000);
+    });
+  });
+
+  // ----------------------------
+  // SWIPE TOUCH — previne scroll vertical acidental
+  // ----------------------------
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchMovendo = false;
+
   container.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
+    touchStartX  = e.touches[0].clientX;
+    touchStartY  = e.touches[0].clientY;
+    touchMovendo = false;
     pararAutoplay();
   }, { passive: true });
 
+  container.addEventListener("touchmove", (e) => {
+    const dx = Math.abs(e.touches[0].clientX - touchStartX);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+    // Se o gesto for predominantemente horizontal, bloqueia scroll da página
+    if (dx > dy && dx > 8) {
+      touchMovendo = true;
+      e.preventDefault();        // evita scroll vertical acidental
+    }
+  }, { passive: false });
+
   container.addEventListener("touchend", (e) => {
-    const delta = e.changedTouches[0].clientX - startX;
-    if (Math.abs(delta) > 50) {
-      indexAtivo += delta < 0 ? 1 : -1;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+
+    // Só navega se foi gesto horizontal (não scroll de página)
+    if (Math.abs(deltaX) > 40 && deltaY < 60) {
+      indexAtivo += deltaX < 0 ? 1 : -1;
       if (indexAtivo < 0)      indexAtivo = total - 1;
       if (indexAtivo >= total) indexAtivo = 0;
       atualizar();
     }
-    iniciarAutoplay();
+
+    setTimeout(() => { if (visivel) iniciarAutoplay(); }, 3000);
   }, { passive: true });
 
   // ----------------------------
-  // B.5 — INICIALIZA após um frame de layout
-  //        (garante que container.offsetWidth já tem valor real)
+  // RESIZE — recalcula sem resetar index
+  // ----------------------------
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(atualizar, 120);
+  });
+
+  // ----------------------------
+  // INIT — aguarda layout real
   // ----------------------------
   requestAnimationFrame(() => {
     atualizar();
-    iniciarAutoplay();
+    // Autoplay inicial só se a seção já estiver visível (ex: página carrega rolada até lá)
+    const rect = stage?.getBoundingClientRect();
+    if (rect && rect.top < window.innerHeight * 0.7) {
+      iniciarAutoplay();
+    }
   });
 }
 
