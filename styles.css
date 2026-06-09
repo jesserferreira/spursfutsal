@@ -484,20 +484,37 @@ img {
     color: var(--color-text-soft);
 }
 
-/* STAGE DA GALERIA – CONTROLA O EIXO Y */
+/* STAGE DA GALERIA */
 .galeria-stage {
   position: relative;
   width: 100%;
-  height: clamp(520px, 70vh, 820px);
+  height: clamp(420px, 65vh, 820px);
   display: flex;
-  align-items: center; /* CENTRALIZA VERTICAL */
+  align-items: center;
   justify-content: center;
+  /* Desktop: overflow visível para o efeito 3D lateral */
   overflow: visible;
+  /* touch-action: pan-y permite scroll vertical mas não interfere no swipe horizontal do JS */
+  touch-action: pan-y;
 }
 
-/* CONTAINER 3D
-   perspective e transform-style são aplicados via JS (iniciarGaleria3D)
-   após o primeiro frame de layout — evita conflito com getBoundingClientRect */
+/* Em mobile o stage precisa de overflow:hidden para cortar os slides
+   laterais que extrapolam a largura da tela */
+@media (max-width: 768px) {
+  .galeria-stage {
+    height: clamp(320px, 75vw, 480px);
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .galeria-stage {
+    height: clamp(280px, 100vw, 400px);
+    overflow: hidden;
+  }
+}
+
+/* CONTAINER 3D — perspective via JS após layout */
 #galeria3d {
   position: relative;
   width: 100%;
@@ -510,8 +527,7 @@ img {
   cursor: pointer;
 }
 
-/* CARD — wrapper transparente, sem fundo, sem borda.
-   A borda azul e o border-radius ficam na <img> via JS (orientação inteligente). */
+/* CARD — wrapper transparente */
 .galeria-card {
   width: 100%;
   height: 100%;
@@ -523,7 +539,7 @@ img {
   border: none;
 }
 
-/* Garante que regras globais de img não sobrescrevam os estilos inline do JS */
+/* Regras globais não sobrescrevem inline do JS */
 .galeria-card img {
   display: block;
   max-width: 100%;
@@ -536,25 +552,10 @@ img {
   z-index: 10;
 }
 
-
-/* MOBILE — apenas a altura do stage muda; tamanhos dos slides via JS */
-@media (max-width: 768px) {
-  .galeria-stage {
-    height: 400px;
-  }
-}
-
-@media (max-width: 640px) {
-  .galeria-stage {
-    height: 340px;
-  }
-}
-
-/* MODO FLAT para dispositivos com prefers-reduced-motion */
-@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+/* MODO FLAT para prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
   .galeria-slide {
-    transform: none !important;
-    opacity: 1 !important;
+    transition: opacity 0.3s ease !important;
   }
 }
 
